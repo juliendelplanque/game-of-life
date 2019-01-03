@@ -63,7 +63,7 @@ GameOfLife extend [
 	]
 
 	next [
-		<category: 'accessing'>
+		<category: 'computation'>
 		| nextWorld |
 			nextWorld := self class extent: self extent.
 			"Fill the next world with new values."
