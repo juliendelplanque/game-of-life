@@ -1,22 +1,16 @@
-Object subclass: #GameOfLife.
-GameOfLife instanceVariableNames: 'cells'.
-GameOfLife comment: 'I model the game of life.
-
-I am basically a matrix of cells being either alive (true) or dead (false).
-
-I am able to compute my next state depending on my current state using #next method.'.
-
-GameOfLife class extend [
-	extent: aPoint [
+Object subclass: GameOfLife [
+	| cells |
+	
+	<comment:'I model the game of life. I am basically a matrix of cells being either alive (true) or dead (false). I am able to compute my next state depending on my current state using #next method.'>
+	
+	GameOfLife class >> extent: aPoint [
 		<category: 'instance creation'>
 		^ self new
 				cells: ((1 to: aPoint x) collect: [ :i |
-							Array new: aPoint y withAll: false ]);
+				    Array new: aPoint y withAll: false ]);
 				yourself
 	]
-]
 
-GameOfLife extend [
 	cells [
 		<category: 'private'>
 		^ cells
@@ -64,8 +58,8 @@ GameOfLife extend [
 
 	next [
 		<category: 'computation'>
-		| nextWorld |
-			nextWorld := self class extent: self extent.
+		| nextGrid |
+			nextGrid := self class extent: self extent.
 			"Fill the next world with new values."
 			1 to: self extent x do: [ :x |
 				1 to: self extent y do: [ :y |
@@ -74,11 +68,11 @@ GameOfLife extend [
 					(((self isAliveAt: x at: y) and: [ (aliveNeighboors size between: 2 and: 3) ])
 						or: [ (self isAliveAt: x at: y) not and: [ (aliveNeighboors size = 3) ] ])
 						ifTrue: [
-							nextWorld
+							nextGrid
 								cellAt: x
 								at: y
 								beAlive: true ] ] ].
-			^ nextWorld
+			^ nextGrid
 	]
 
 	extent [
